@@ -1,0 +1,48 @@
+%!TEX TS-program = xelatex
+%% vim:fileencoding=utf-8:foldmethod=marker:fmr=<<<,>>>
+
+% <<< Basic document settings
+\documentclass[
+ 12pt,                % Font size
+ a4paper              % Paper type
+]{book}
+% >>>
+
+% <<< Packages
+\usepackage{my_style} % My custom stylings
+% >>>
+
+% <<< Custom commands
+\renewcommand{\HeaderLEText}{Header Text 1}
+\renewcommand{\HeaderROText}{Header Text 2}
+% >>>
+
+\begin{document}
+ % <<< Title page
+ \begin{titlepage}
+  \begin{center}
+   \vspace*{1cm}
+   \vspace{4\baselineskip}
+
+   {
+    \Huge
+    Title\par
+   }
+
+   \vspace{2.5\baselineskip}
+
+   by\par
+
+   {
+    \Large\textsc{Author}\par
+   }
+  \end{center}
+ \end{titlepage}
+ % >>>
+
+ \CustomToC           % Load ToC with customizations
+
+ % <<< Document content
+ Book
+ % >>>
+\end{document}

@@ -11,7 +11,7 @@
 %% Due to the conditionals based on loaded packages, this should be kept last
 %%  in your package list.
 %%
-%% Major changes: 
+%% Major changes:
 %%  created   04/10/21 ~ 18:21:32
 %%  modified1 15/10/21 ~ 23:15:05
 %%  modified2 03/11/21 ~ 18:37:45
@@ -117,9 +117,9 @@
 {}
 
 % <<< Shortened links that don't overfull
+\ExplSyntaxOn
 \@ifpackageloaded{hyperref}
 {
- \ExplSyntaxOn
  \NewDocumentCommand{\shorturl}{m}
  {
   \tl_set:Nn \l__shorturl_url_tl {#1}
@@ -133,9 +133,9 @@
   \href{#1}{\nolinkurl{#2}}
  }
  \cs_generate_variant:Nn \shorturl_print:nn { nV }
- \ExplSyntaxOff
 }
 {}
+\ExplSyntaxOff
 % >>>
 
 % <<<  ToC with empty pagestyle

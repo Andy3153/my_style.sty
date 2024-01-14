@@ -19,6 +19,7 @@
 %%  modified4 07/04/22 ~ 23:59:32
 %%  modified5 21/05/22 ~ 13:29:43
 %%  modified6 25/05/22 ~ 14:15:27
+%%  modified7 14/01/24 ~ 15:25:31
 %%
 
 \NeedsTeXFormat{LaTeX2e}
@@ -108,13 +109,14 @@
 \newcommand{\textbfit}[1]{\textbf{\textit{#1}}}                      % combine bold and italic
 \newcommand{\ex}[1]{\dashuline{\texttt{\footnotesize#1}}}            % things to be filled by the reader
 
-% Filler commands for header text to not get errors
+% <<< Filler commands for header text to not get errors
 \@ifpackageloaded{fancyhdr}
 {
  \newcommand{\HeaderROText}{\textbackslash renewcommand\{\textbackslash HeaderROText\}\{newtexthere\}}
  \newcommand{\HeaderLEText}{\textbackslash renewcommand\{\textbackslash HeaderLEText\}\{newtexthere\}}
 }
 {}
+% >>>
 
 % <<< Shortened links that don't overfull
 \ExplSyntaxOn
@@ -139,9 +141,22 @@
 % >>>
 
 % <<<  ToC with empty pagestyle
+\newcommand{\CustomToC}{}
+
+\@ifclassloaded{article}
+{
+ \renewcommand{\CustomToC}
+ {
+  \pagestyle{empty}\null\cleardoublepage
+  \pagestyle{plain}\tableofcontents\newpage\hphantom{sdf}\vfill
+  \pagestyle{empty}\cleardoublepage
+  \pagestyle{plain}
+ }
+}
+
 \@ifpackageloaded{fancyhdr}
 {
- \newcommand{\CustomToC}
+ \renewcommand{\CustomToC}
  {
   % EVERYTHING YOU SEE HERE
   %      was made in order to
@@ -166,6 +181,53 @@
  }
 }
 {}
+% >>>
+
+% <<< Basic image insertion style
+\newcommand{\InsertImg}[2]
+{
+ \begin{figure}[H]
+  \centering
+  \includegraphics[#2]{#1}
+ \end{figure}
+}
+% >>>
+
+% <<< Math-related
+\@ifpackageloaded{mathtools}
+{
+ % <<< Write inline math with larger line widths
+ \newenvironment{MyMath}
+ {
+  %\vspace{-.5cm}
+  \def\baselinestretch{2}\selectfont
+ }
+ {
+  \par\def\baselinestretch{1}\selectfont
+ }
+ % >>>
+
+ % <<< Declare operator tg
+ \DeclareMathOperator{\tg}{tg}
+ % >>>
+
+ % <<< Replace multiplication symbol
+ \let\oldtimes\times
+ \let\times\cdot
+ %\let\times\empty
+ % >>>
+
+ % <<< Use the second \epsilon variant
+ \let\oldepsilon\epsilon
+ \let\epsilon\varepsilon
+ % >>>
+
+ % <<< Display fractions nicely
+ \let\oldfrac\frac
+ \renewcommand{\frac}{\displaystyle\oldfrac}
+ \everymath{\displaystyle}
+ % >>>
+}
 % >>>
 % >>>
 

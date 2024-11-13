@@ -9,7 +9,7 @@
 %% It used to be a template, and then an input file, it now evolved into a package.
 %%
 %% Due to the conditionals based on loaded packages, this should be kept last
-%%  in your package list.
+%% in your package list.
 %%
 %% Major changes:
 %%  created   04/10/21 ~ 18:21:32
@@ -20,6 +20,7 @@
 %%  modified5 21/05/22 ~ 13:29:43
 %%  modified6 25/05/22 ~ 14:15:27
 %%  modified7 14/01/24 ~ 15:25:31
+%%  modified8 31/10/24 ~ 11:25:05
 %%
 
 \NeedsTeXFormat{LaTeX2e}
@@ -36,16 +37,14 @@
 ]{geometry}
 \RequirePackage[romanian]{babel}     % Romanian characters support
 \RequirePackage{indentfirst}         % Add paragraph indentation even after a section
-\RequirePackage{marginnote}          % Notes on the margins of a document (more advanced \marginpar)
 \RequirePackage{titlesec}            % Customize titles
-\RequirePackage[dash]{dashundergaps} % Dashes and dots as underlines
+\RequirePackage{bookmark}            % Configure PDF bookmarks
 
 % Packages specific for the book documentclass
 \@ifclassloaded{book}
 {
  \RequirePackage{xcolor}             % Custom colors
  \RequirePackage{fancyhdr}           % Custom headers
- \RequirePackage{bookmark}           % Configure PDF bookmarks
  \RequirePackage[titles]{tocloft}    % Customize ToC
 }
 {}
@@ -55,10 +54,11 @@
  \RequirePackage{float}              % Better floating figures
  \RequirePackage{caption}            % Better figure captions
  \RequirePackage{mdframed}           % Frames around figures
+ \RequirePackage{rotating}           % Float rotation
 }
 {}
 
-\RequirePackage{hyperref}           % Hyperlink support, keep last in package list!
+\RequirePackage{hyperref}            % Hyperlink support, keep last in package list!
 
 \@ifpackageloaded{hyperref}
 {
@@ -66,6 +66,15 @@
  \usepackage{xurl}                   % Break URLs wherever
 }
 {}
+
+% <<< Custom package loading commands
+\NewDocumentCommand\LoadPackagesForTables{}
+{
+ \RequirePackage{ltablex}            % Table extensions
+ \RequirePackage{multirow}           % Table cells spanning multiple rows
+ \RequirePackage{siunitx}            % `S` column type
+}
+% >>>
 % >>>
 
 % <<< Custom format for titles, sections etc.

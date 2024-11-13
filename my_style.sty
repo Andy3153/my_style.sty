@@ -78,6 +78,15 @@
 % >>>
 
 % <<< Custom format for titles, sections etc.
+% <<< Save original values
+\let\thestdpart\thepart
+\let\thestdsection\thesection
+\let\thestdsubsection\thesubsection
+\let\thestdsubsubsection\thesubsubsection
+\let\thestdenumi\theenumi
+% >>>
+
+% <<< For books only
 \@ifclassloaded{book}
 {
  % <<< Parts
@@ -89,7 +98,7 @@
  % >>>
 
  % <<< Chapters
- \newcommand{\DetermineHSpaceSize}{\ifnum\value{chapter} > 9 {\hspace{7pt}}\else{\hspace{15pt}}\fi}
+ \NewDocumentCommand\DetermineHSpaceSize{}{\ifnum\value{chapter} > 9 {\hspace{7pt}}\else{\hspace{15pt}}\fi}
  \titleformat{\chapter}[hang]
  {\Large}
  {\thechapter\DetermineHSpaceSize\textcolor{gray75}{|}\hspace{15pt}}
@@ -97,18 +106,29 @@
  {\thispagestyle{chapterfancystyle}\Large}
  % >>>
 
- \renewcommand{\thesection}{\arabic{section}} % Remove chapter number from section
+ \RenewDocumentCommand\thesection{}{\arabic{section}} % Remove chapter number from section
 }
 {}
-
-% <<< Sections
-\titleformat*{\section}
-{\large\bfseries}
 % >>>
 
-% <<< Subsections
-\titleformat*{\subsection}
-{\normalfont\bfseries}
+% <<< For articles only
+\@ifclassloaded{article}
+{
+ % <<< Parts
+ \titleformat{\part}[display]
+ {\LARGE\filright}
+ {\thepart}
+ {10pt}
+ {}
+ [\vspace*{20pt}]
+
+ % Start sections from 1 after new part
+ \AddToHook{cmd/part/before}{\setcounter{section}{0}}
+ % >>>
+}
+{}
+% >>>
+
 % >>>
 % >>>
 

@@ -163,15 +163,28 @@
 
 % <<< Custom commands
 % Format: \newcommand{\commandname}[variablecount]{\action #variables}
-\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}} % Roman numerals
-\newcommand{\textbfit}[1]{\textbf{\textit{#1}}}                      % combine bold and italic
-\newcommand{\ex}[1]{\dashuline{\texttt{\footnotesize#1}}}            % things to be filled by the reader
+\NewDocumentCommand\rom{m}{\uppercase\expandafter{\romannumeral #1\relax}} % Roman numerals
+\NewDocumentCommand\textbfit{m}{\textbf{\textit{#1}}}                      % combine bold and italic
 
 % <<< Filler commands for header text to not get errors
 \@ifpackageloaded{fancyhdr}
 {
- \newcommand{\HeaderROText}{\textbackslash renewcommand\{\textbackslash HeaderROText\}\{newtexthere\}}
- \newcommand{\HeaderLEText}{\textbackslash renewcommand\{\textbackslash HeaderLEText\}\{newtexthere\}}
+ \NewDocumentCommand\HeaderROText{}{\textbackslash RenewDocumentCommand\textbackslash HeaderROText\{\}\{newtexthere\}}
+ \NewDocumentCommand\HeaderLEText{}{\textbackslash RenewDocumentCommand\textbackslash HeaderLEText\{\}\{newtexthere\}}
+}
+{}
+% >>>
+
+% <<< Basic image insertion style
+\@ifpackageloaded{graphicx}
+{
+ \newcommand{\InsertImg}[2]
+ {
+  \begin{figure}[H]
+   \centering
+   \includegraphics[#2]{#1}
+  \end{figure}
+ }
 }
 {}
 % >>>
@@ -180,7 +193,7 @@
 \ExplSyntaxOn
 \@ifpackageloaded{hyperref}
 {
- \NewDocumentCommand{\shorturl}{m}
+ \NewDocumentCommand\shorturl{m}
  {
   \tl_set:Nn \l__shorturl_url_tl {#1}
   \regex_replace_all:nnN {.*:\/\/(?:www.)?(.*[^\/])\/?} {\1} \l__shorturl_url_tl
@@ -198,12 +211,12 @@
 \ExplSyntaxOff
 % >>>
 
-% <<<  ToC with empty pagestyle
-\newcommand{\CustomToC}{}
+% <<< ToC with empty pagestyle
+\NewDocumentCommand\CustomToC{}
 
 \@ifclassloaded{article}
 {
- \renewcommand{\CustomToC}
+ \RenewDocumentCommand\CustomToC{}
  {
   \pagestyle{empty}\null\cleardoublepage
   \pagestyle{plain}\tableofcontents\newpage\hphantom{sdf}\vfill
@@ -214,7 +227,7 @@
 
 \@ifpackageloaded{fancyhdr}
 {
- \renewcommand{\CustomToC}
+ \RenewDocumentCommand\CustomToC{}
  {
   % EVERYTHING YOU SEE HERE
   %      was made in order to
@@ -229,8 +242,8 @@
     \fancypagestyle{plain}           % create temporary plain pagestyle
     {
       \fancyhf{}
-      \renewcommand{\headrulewidth}{0pt}
-      \renewcommand{\footrulewidth}{0pt}
+      \renewcommand\headrulewidth{0pt}
+      \renewcommand\footrulewidth{0pt}
     }
     \tableofcontents                 % actually generate the ToC
     \thispagestyle{empty}
@@ -241,19 +254,15 @@
 {}
 % >>>
 
-% <<< Basic image insertion style
-\newcommand{\InsertImg}[2]
-{
- \begin{figure}[H]
-  \centering
-  \includegraphics[#2]{#1}
- \end{figure}
-}
-% >>>
-
 % <<< Math-related
 \@ifpackageloaded{mathtools}
 {
+ % <<< Save original values
+ \let\stdtimes\times
+ \let\stdepsilon\epsilon
+ \let\stdfrac\frac
+ % >>>
+
  % <<< Write inline math with larger line widths
  \newenvironment{MyMath}
  {
@@ -270,19 +279,16 @@
  % >>>
 
  % <<< Replace multiplication symbol
- \let\oldtimes\times
  \let\times\cdot
  %\let\times\empty
  % >>>
 
  % <<< Use the second \epsilon variant
- \let\oldepsilon\epsilon
  \let\epsilon\varepsilon
  % >>>
 
  % <<< Display fractions nicely
- \let\oldfrac\frac
- \renewcommand{\frac}{\displaystyle\oldfrac}
+ \renewcommand\frac{\displaystyle\stdfrac}
  \everymath{\displaystyle}
  % >>>
 }
@@ -330,8 +336,8 @@
  \fancypagestyle{chapterfancystyle}{
   \fancyhf{}
   \fancyfoot[LE,RO]{\thepage}
-  \renewcommand{\headrulewidth}{0pt}
-  \renewcommand{\footrulewidth}{1pt}
+  \renewcommand\headrulewidth{0pt}
+  \renewcommand\footrulewidth{1pt}
  } % style for chapter page
 
  \fancypagestyle{plain}{
@@ -345,8 +351,8 @@
    \endgroup
   }
   \fancyfoot[LE,RO]{\thepage}
-  \renewcommand{\headrulewidth}{2pt}
-  \renewcommand{\footrulewidth}{1pt}
+  \renewcommand\headrulewidth{2pt}
+  \renewcommand\footrulewidth{1pt}
  } % style for the rest of the document
 }
 {}
@@ -355,7 +361,7 @@
 % <<< More ToC customization
 \@ifpackageloaded{tocloft}
 {
- \renewcommand{\cftdot}{} % Remove ToC dots
+ \renewcommand\cftdot{} % Remove ToC dots
  \addtocontents{toc}{\string\renewcommand{\protect\cftchappagefont}{\protect\normalfont}}
  \addtocontents{toc}{\string\renewcommand{\protect\cftchapfont}{\protect\normalfont}}
  \addtocontents{toc}{\string\renewcommand{\protect\cftchapleader}{\protect\normalfont\protect\cftdotfill{\protect\cftsecdotsep}}} % Disable bold in ToC

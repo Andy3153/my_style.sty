@@ -21,6 +21,7 @@
 %%  modified6 25/05/22 ~ 14:15:27
 %%  modified7 14/01/24 ~ 15:25:31
 %%  modified8 31/10/24 ~ 11:25:05
+%%  modified9 14/11/24 ~ 15:19:06
 %%
 
 \NeedsTeXFormat{LaTeX2e}
@@ -162,7 +163,7 @@
 % >>>
 
 % <<< Custom commands
-% Format: \newcommand{\commandname}[variablecount]{\action #variables}
+% https://www.texdev.net/2010/05/23/from-newcommand-to-newdocumentcommand/
 \NewDocumentCommand\rom{m}{\uppercase\expandafter{\romannumeral #1\relax}} % Roman numerals
 \NewDocumentCommand\textbfit{m}{\textbf{\textit{#1}}}                      % combine bold and italic
 
@@ -178,12 +179,22 @@
 % <<< Basic image insertion style
 \@ifpackageloaded{graphicx}
 {
- \newcommand{\InsertImg}[2]
+ \NewDocumentCommand\insertimg{mO{}d<>}
  {
-  \begin{figure}[H]
-   \centering
-   \includegraphics[#2]{#1}
-  \end{figure}
+  \IfNoValueTF{#3}
+  {
+   \begin{figure}[H]
+    \centering
+    \includegraphics[#2]{#1}
+   \end{figure}
+  }
+  {
+   \begin{figure}[H]
+    \centering
+    \includegraphics[#2]{#1}
+    \caption{#3}
+   \end{figure}
+  }
  }
 }
 {}

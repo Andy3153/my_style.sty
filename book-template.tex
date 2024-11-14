@@ -7,14 +7,24 @@
 
 % <<< Basic document settings
 \documentclass[
- %draft                % Uncomment to enable 'draft mode'
- 12pt,                % Font size
- a4paper              % Paper type
+ %draft  % Draft mode
+ 12pt,   % Font size
+ a4paper % Paper type
 ]{book}
 % >>>
 
 % <<< Packages
-\usepackage{my_style} % My custom stylings, keep last!
+%\usepackage{mathtools} % Math utils
+%\usepackage{graphicx}  % Graphics support
+%\usepackage{multicol}  % Multi-column environment
+\usepackage{my_style}   % My custom stylings, keep last!
+%\LoadPackagesForTables % Load packages used for tables
+% >>>
+
+% <<< Other settings
+% <<< Image location
+%\graphicspath{ {./img/} }
+% >>>
 % >>>
 
 % <<< Custom commands
@@ -25,27 +35,19 @@
 \begin{document}
  % <<< Title page
  \begin{titlepage}
-  \begin{center}
-   \vspace*{1cm}
-   \vspace{4\baselineskip}
+  \centering\vspace*{6cm}
 
-   {
-    \Huge
-    Title\par
-   }
+  { \Huge Title\par }
 
-   \vspace{2.5\baselineskip}
+  \vspace{1.5cm}
 
-   by\par
+  by
 
-   {
-    \Large\textsc{Author}\par
-   }
-  \end{center}
+  { \Large\textsc{Author}\par }
  \end{titlepage}
  % >>>
 
- \CustomToC           % Load ToC with customizations
+ \CustomToC % Create custom ToC
 
  % <<< Document content
  Book

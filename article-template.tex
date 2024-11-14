@@ -7,14 +7,25 @@
 
 % <<< Basic document settings
 \documentclass[
- %draft                % Uncomment to enable 'draft mode'
- 12pt,                % Font size
- a4paper              % Paper type
+ %draft,   % Draft mode
+ %twoside, % Two-sided document (like books)
+ 12pt,     % Font size
+ a4paper   % Paper type
 ]{article}
 % >>>
 
 % <<< Packages
-\usepackage{my_style} % My custom stylings, keep last!
+%\usepackage{mathtools} % Math utils
+%\usepackage{graphicx}  % Graphics support
+%\usepackage{multicol}  % Multi-column environment
+\usepackage{my_style}   % My custom stylings, keep last!
+%\LoadPackagesForTables % Load packages used for tables
+% >>>
+
+% <<< Other settings
+% <<< Image location
+%\graphicspath{ {./img/} }
+% >>>
 % >>>
 
 % <<< Basic document info
@@ -24,7 +35,8 @@
 % >>>
 
 \begin{document}
- \maketitle           % Generate title
+ \maketitle % Generate title
+ \CustomToC % Create custom ToC
 
  % <<< Document content
  Article
